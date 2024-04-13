@@ -127,18 +127,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Files.cpp" />
-    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="files.cpp" />
+    <ClCompile Include="input.cpp" />
     <ClCompile Include="Lab1New.cpp" />
-    <ClCompile Include="ShowMenu.cpp" />
-    <ClCompile Include="Tasks.cpp" />
+    <ClCompile Include="runTests.cpp" />
+    <ClCompile Include="showMenu.cpp" />
+    <ClCompile Include="tasks.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Flight.h" />
     <ClInclude Include="Flight_manager.h" />
-    <ClInclude Include="Files.h" />
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="ShowMenu.h" />
+    <ClInclude Include="files.h" />
+    <ClInclude Include="input.h" />
+    <ClInclude Include="runTests.h" />
+    <ClInclude Include="showMenu.h" />
+    <ClInclude Include="tasks.h" />
+    <ClInclude Include="TestCase.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

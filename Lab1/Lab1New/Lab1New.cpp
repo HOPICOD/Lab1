@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "Tasks.h"
 #include "Files.h"
+#include "runTests.h"
 
 #include <iostream>
 #include <vector>
@@ -58,6 +59,7 @@ int main()
             break;
         }
         case(RUN_TESTS): {
+            runTests();
             break;
         }
         case(EXIT): {

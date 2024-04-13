@@ -61,7 +61,7 @@ public:
 
 		for (Flight flight : flights) {
 
-			if (flight.get_destination() == destination && flight.get_hours() > hours && flight.get_minutes() > minutes) { suitable_flights.push_back(flight); }
+			if (flight.get_destination() == destination && flight.get_hours() < hours && flight.get_minutes() < minutes) { suitable_flights.push_back(flight); }
 
 		}
 		return suitable_flights;

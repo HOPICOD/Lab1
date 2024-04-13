@@ -55,6 +55,11 @@ public:
 
 
 
-	void show_full_flight() { cout << destination << ' ' << plane_type << ' ' << days << ' ' << number_of_flight << " " << hours << ":" << minutes << endl; }
+	void show_full_flight() {
+		cout << destination << ' ' << plane_type << ' ' << days << ' ' << number_of_flight << ' ';
+		printf("%02d:", hours);
+		printf("%02d", minutes);
+		cout << endl;
+	}
 
 };
