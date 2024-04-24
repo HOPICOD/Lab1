@@ -15,7 +15,7 @@ using namespace std;
 
 int main()
 {
-    ShowGreeting();
+    show_greeting();
 
     int user_menu_choice = 0;
 
@@ -26,8 +26,8 @@ int main()
     Flight_manager flights;
 
     do {
-        ShowTasks_for_input();
-        user_menu_choice = InputInt("Select menu point", 0, 10);
+        show_tasks_for_input();
+        user_menu_choice = input_int("Select menu point", 0, 10);
         switch (user_menu_choice) {
         case(ADD_FLIGHT): {
             add_flight(flights);

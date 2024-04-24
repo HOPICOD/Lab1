@@ -11,7 +11,7 @@ bool file_exists(const string& filename);
 
 bool confirm_overwrite(const string& filename);
 
-vector<Flight> get_flights_from_file(const string fileName);
+vector<Flight> get_flights_from_file(const string filename);
 
 void export_to_file(vector<Flight> flights_to_export);
 

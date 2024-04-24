@@ -25,7 +25,7 @@ bool confirm_overwrite(const string& filename) {
 
 	int user_choice = 0;
 
-	user_choice = InputInt("Enter menu item:", 0, 3);
+	user_choice = input_int("Enter menu item:", 0, 3);
 
 	if (user_choice == YES) { return true; }
 
@@ -34,7 +34,7 @@ bool confirm_overwrite(const string& filename) {
 }
 
 vector<Flight> get_flights_from_file(const string filename) {
-	vector<Flight> files;
+	/*vector<Flight> files;
 
 	ifstream input_file(filename);
 	if (!input_file.is_open()) {
@@ -96,12 +96,52 @@ vector<Flight> get_flights_from_file(const string filename) {
 	}
 
 	input_file.close();
-	return files;
+	return files;*/
+	vector<Flight> flights;
+
+	ifstream input_file(filename);
+	if (!input_file.is_open()) {
+		cerr << "Error opening file: " << filename << endl;
+		return flights;
+	}
+
+	string line;
+	while (getline(input_file, line)) {
+		if (line.empty()) {
+			cerr << "Warning: Skipped empty line." << endl;
+			continue;
+		}
+
+		stringstream ss(line);
+
+		string destination;
+		string plane_type;
+		string days;
+		int number_of_flight;
+		int hours;
+		int minutes;
+
+		if (!(ss >> destination >> plane_type >> days >> number_of_flight >> hours) || ss.get() != ':' || !(ss >> minutes)) {
+			cerr << "Error parsing line: " << line << endl;
+			continue;
+		}
+
+		if (number_of_flight < 0 || hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
+			cerr << "Error: Invalid data in line: " << line << endl;
+			continue;
+		}
+
+		Flight flight(destination, plane_type, days, number_of_flight, hours, minutes);
+		flights.push_back(flight);
+	}
+
+	input_file.close();
+	return flights;
 };
 
 bool is_filepath_valid(const string& filepath) {
 
-	regex file_path_regex("^(?:[a-zA-Z]\\:|\\\\)\\\\([^\\\\]+\\\\)*[^\\/:*?\"<>|]+\\.csv$");
+	regex file_path_regex("^(?:[a-zA-Z]\\:|\\\\)\\\\([^\\\\]+\\\\)*[^\\/:*?\"<>|]+\\.txt$");
 
 	if (!regex_match(filepath, file_path_regex)) {
 		cerr << "Error: Invalid file path." << endl;
@@ -111,7 +151,7 @@ bool is_filepath_valid(const string& filepath) {
 	return true;
 }
 bool is_filename_valid(string& filename) {
-	regex filename_regex("^[^\\/:*?\"<>|]+\\.csv$");
+	regex filename_regex("^[^\\/:*?\"<>|]+\\.txt$");
 
 	regex filename_reserved_names("^(?:CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9]|con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\\..*)?$");
 
@@ -139,32 +179,48 @@ string get_valid_filepath() {
 	bool is_path_valid = false;
 	bool is_name_valid = false;
 
-	string filename { "" };
+	//string filename { "" };
 	string filepath { "" };
 
-	while (!is_path_valid && !is_name_valid) {
+	while (!is_path_valid || !is_name_valid) {
+		cout << "Enter fullpath with filename (only txt acceptable): " << endl;
+		getline(cin, filepath);
+		size_t pos = filepath.find_last_of("\\");
+
+		if(pos>sizeof(filepath)){
 		
-		filename = InputString("Enter filename (only csv acceptable): ");
+			if (is_filename_valid(filepath)) {
 
-		filepath = InputString("Enter full path to path: ");
+				is_path_valid = true;
+				is_name_valid = true;
 
-		if (is_filepath_valid(filepath + filename) && is_filename_valid(filename)) {
-			is_path_valid = true;
-			is_name_valid = true;
+			}
 		}
+
+			if (pos != string::npos) {
+				string filename = filepath.substr(pos + 1);
+				string path = filepath.substr(0, pos + 1);
+
+				//filename = InputString("Enter filename (only csv acceptable): ");
+
+				//filepath = InputString("Enter full path to path: ");
+
+				if (is_filepath_valid(path + filename) && is_filename_valid(filename)) {
+					is_path_valid = true;
+					is_name_valid = true;
+				}
+		
+			}
 	}
 
-	return filepath + filename;
+	return filepath;
 }
 
 string get_overwrite_confirmation(string& full_path) {
-	while (file_exists(full_path)) {
-		if (confirm_overwrite(full_path)) {
-			return full_path;
-		}
-		else {
+	if (file_exists(full_path)) {
+		while (!confirm_overwrite(full_path)) {
 			cout << "Please choose another file." << endl;
-			return get_valid_filepath();
+			full_path = get_valid_filepath();
 		}
 	}
 	return full_path;
@@ -196,8 +252,8 @@ void export_to_file(vector<Flight> flights_to_export) {
 	}
 
 	for (Flight& export_flight : flights_to_export) {
-		file << export_flight.get_destination() << ";" << export_flight.get_plane_type() << ";" << export_flight.get_days() << ";"
-			<< export_flight.get_number_of_flight() << ";" << export_flight.get_hours() << ":" << export_flight.get_minutes() << "\n";
+		file << export_flight.get_destination() << ' ' << export_flight.get_plane_type() << ' ' << export_flight.get_days() << ' '
+			<< export_flight.get_number_of_flight() << ' ' << setw(2) << setfill('0') << export_flight.get_hours() << ":" << setw(2) << setfill('0') << export_flight.get_minutes() << "\n";
 	}
 
 	file.close();

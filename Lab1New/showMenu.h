@@ -1,2 +1,2 @@
-void ShowGreeting();
-void ShowTasks_for_input();
+void show_greeting();
+void show_tasks_for_input();

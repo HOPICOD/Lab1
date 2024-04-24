@@ -1,21 +1,21 @@
 #include <iostream>
 using namespace std;
-void ShowGreeting() {
-	cout << "Lab1.cpp" << endl;
-	cout << "Quiz No. 1." << endl;
+void show_greeting() {
+	cout << "Option 3" << endl;
+	cout << "Test No. 1." << endl;
 	cout << "Encapsulation. Classes in C++ and means of their construction" << endl;
 	cout << "Flight: destination, flight number, type of aircraft, departure time, days of the week." << endl;
 	cout << "Create an array of objects. Implement the possibility of obtaining:" << endl;
-	cout << "- a list of flights for a given destination," << endl;
-	cout << "- a list of flights for a given day of the week," << endl;
-	cout << "- a list of flights for a given day of the week, the departure time for which is later than the specified one." << endl;
+	cout << "\t- a list of flights for a given destination," << endl;
+	cout << "\t- a list of flights for a given day of the week," << endl;
+	cout << "\t- a list of flights for a given day of the week, the departure time for which is later than the specified one." << endl;
 	cout << "Student of group 4307, Bakhmetov Kirill Alexeyevich. 2024\n\n\n" << endl;;
 }
 
 
 
 
-void ShowTasks_for_input() {
+void show_tasks_for_input() {
 	cout << "1 - add a new flight" << endl;
 	cout << "2 - show all flights" << endl;
 	cout << "3 - save flights to the file" << endl;

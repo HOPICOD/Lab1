@@ -1,8 +1,9 @@
 #pragma once
 #include <iostream>
 
-int InputInt(std::string message, int min, int max);
+int input_int(std::string message, int min, int max);
 
 double InputDouble(std::string message, int min, int max);
 
-std::string InputString(std::string message);
+std::string input_string(std::string message);
+std::string day_of_week_input();

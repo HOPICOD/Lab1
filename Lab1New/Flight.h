@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "Input.h"
+#include <iomanip>
 
 using namespace std;
 
@@ -22,26 +23,6 @@ public:
 
 
 
-	static Flight get_input_flight() {
-
-		string new_destination = InputString("Set destination:");
-		string new_plane_type = InputString("Set plane type:");
-		string new_day_of_week = InputString("Set day of week:");
-
-		
-		int new_number_of_flight = InputInt("Set number of flight:", 0, INT_MAX);
-		int new_hour = InputInt("Set hour of flight:", 0, 23);
-		int new_minutes = InputInt("Set minutes of flight:", 0, 59);
-
-		
-
-
-		return Flight(new_destination, new_plane_type, new_day_of_week, new_number_of_flight, new_hour, new_minutes);
-
-	}
-
-
-
 
 
 	string get_destination() { return destination; }
@@ -56,10 +37,21 @@ public:
 
 
 	void show_full_flight() {
-		cout << destination << ' ' << plane_type << ' ' << days << ' ' << number_of_flight << ' ';
-		printf("%02d:", hours);
-		printf("%02d", minutes);
-		cout << endl;
+		
+		/*cout << destination << ' ' << plane_type << ' ' << days << ' ' << number_of_flight << ' ';
+		if (hours < 10) {
+			cout << '0';
+		}
+		cout << hours << ':';
+		if (minutes < 10) {
+			cout << '0';
+		}
+		cout << minutes << endl;
+		cout << endl;*/
+		cout << destination << ' ' << plane_type << ' ' << days << ' ' << number_of_flight << ' '
+			<< setw(2) << setfill('0') << hours << ':'
+			<< setw(2) << setfill('0') << minutes << endl << endl;
+
 	}
 
 };

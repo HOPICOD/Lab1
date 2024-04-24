@@ -14,8 +14,14 @@ public:
 
 
 	void show_flights() {
+		
+		if (flights.empty()) {cout << "You haven't added any flights yet";}
+		
+		else {
+			cout << "Your flights: " << endl << endl;
+			for (Flight flight : flights) { flight.show_full_flight(); }
+		}
 		cout << endl;
-		for (Flight flight : flights) { flight.show_full_flight(); }
 	}
 
 	void show_suitable_flights(vector<Flight> suitable_flights) {
@@ -55,7 +61,7 @@ public:
 		return suitable_flights;
 	}
 
-	vector<Flight> search_destination_later_time(string days, int hours, int minutes) {
+	vector<Flight> search_day_later_time(string days, int hours, int minutes) {
 
 		vector<Flight> suitable_flights;
 

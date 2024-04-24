@@ -7,17 +7,28 @@
 
 using namespace std;
 
+
+
 bool confirm_save_search_results() {
 
 	cout << "Do you want to save your search results? " << endl << "1 - Yes;" << endl << "0 - No;" << endl;;
-	int user_choice = InputInt("Enter menu item:", -1, 2);
+	int user_choice = input_int("Enter menu item:", -1, 2);
 
 	return user_choice;
 }
 
 void add_flight(Flight_manager& flights) {
 
-	Flight flight = Flight::get_input_flight();
+	string destination = input_string("Set destination:");
+	string plane_type = input_string("Set plane type:");
+	string day_of_week = day_of_week_input();
+
+
+	int number_of_flight = input_int("Set number of flight:", 0, INT_MAX);
+	int hour = input_int("Set hour of flight:", -1, 24);
+	int minutes = input_int("Set minutes of flight:", -1, 60);
+	
+	Flight flight(destination, plane_type, day_of_week, number_of_flight, hour, minutes);
 
 	flights.add_flight(flight);
 }
@@ -35,8 +46,6 @@ void load_data(Flight_manager& flights) {
 
 void save_data(Flight_manager& flights) {
 
-	string filepath = get_valid_filepath();
-
 	vector<Flight> flights_to_export = flights.get_flights();
 
 	if (flights_to_export.empty()) { cerr << "Error saving to file" << endl; return; }
@@ -46,9 +55,9 @@ void save_data(Flight_manager& flights) {
 
 void search_by_destination(Flight_manager& flights) {
 
-	if (flights.get_flights().empty()) { cout << "There is no employees" << endl; return; }
+	if (flights.get_flights().empty()) { cout << "You haven't added any flights yet" << endl; return; }
 
-	string destination = InputString("Set a destination to search flight: ");
+	string destination = input_string("Set a destination to search flight: ");
 
 	vector<Flight> suitable_flights = flights.search_by_destination(destination);
 
@@ -62,9 +71,9 @@ void search_by_destination(Flight_manager& flights) {
 
 void search_day_of_week(Flight_manager& flights) {
 
-	if (flights.get_flights().empty()) { cout << "There is no flights" << endl; return; }
+	if (flights.get_flights().empty()) { cout << "You haven't added any flights yet" << endl; return; }
 
-	string days = InputString("Set a day of week to search the flight: ");
+	string days = day_of_week_input();
 
 	vector<Flight> suitable_flights = flights.search_day_of_week(days);
 
@@ -78,13 +87,13 @@ void search_day_of_week(Flight_manager& flights) {
 
 void search_destination_later_time(Flight_manager& flights) {
 
-	if (flights.get_flights().empty()) { cout << "There is no flights" << endl; return; }
+	if (flights.get_flights().empty()) { cout << "You haven't added any flights yet" << endl; return; }
 
-	string days = InputString("Set a day of week to search the flight: ");
-	int hours = InputInt("Set a hour to search the flight: ", 0, 24);
-	int minutes = InputInt("Set a minutes to search the flight: ", 0, 59);
+	string days = day_of_week_input();
+	int hours = input_int("Set a hour to search the flight: ",-1, 24);
+	int minutes = input_int("Set a minutes to search the flight: ", -1, 60);
 
-	vector<Flight> suitable_flights = flights.search_destination_later_time(days, hours, minutes);
+	vector<Flight> suitable_flights = flights.search_day_later_time(days, hours, minutes);
 
 	if (suitable_flights.empty()) { cout << "There is no suitable flights" << endl; return; }
 

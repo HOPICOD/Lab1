@@ -4,7 +4,7 @@
 
 
 
-bool runVectorCheck(vector<Flight>& flightsToTest, vector<Flight>& expectedFlights) {
+bool run_vector_check(vector<Flight>& flightsToTest, vector<Flight>& expectedFlights) {
 
 	for (int i = 0; i < flightsToTest.size(); ++i) {
 		
@@ -17,7 +17,7 @@ bool runVectorCheck(vector<Flight>& flightsToTest, vector<Flight>& expectedFligh
 }
 
 
-bool runSearchByDestinationTest(vector<Flight>& flightsToTest, vector<Flight>& expectedFlights, string destination) {
+bool run_search_by_destination_test(vector<Flight>& flightsToTest, vector<Flight>& expectedFlights, string destination) {
 
 	Flight_manager flights;
 
@@ -27,7 +27,7 @@ bool runSearchByDestinationTest(vector<Flight>& flightsToTest, vector<Flight>& e
 
 	bool test_passed = false;
 
-	test_passed = runVectorCheck(tested_flights, expectedFlights);
+	test_passed = run_vector_check(tested_flights, expectedFlights);
 
 	if (test_passed) {
 		cout << "Search by destination successfully passed" << endl;
@@ -39,7 +39,7 @@ bool runSearchByDestinationTest(vector<Flight>& flightsToTest, vector<Flight>& e
 }
 
 
-bool runSearchByDayOfWeekTest(vector<Flight>& flightsToTest, vector<Flight>& expectedFlights, string days) {
+bool run_search_by_day_of_week_test(vector<Flight>& flightsToTest, vector<Flight>& expectedFlights, string days) {
 
 	Flight_manager flights;
 
@@ -49,7 +49,7 @@ bool runSearchByDayOfWeekTest(vector<Flight>& flightsToTest, vector<Flight>& exp
 
 	bool test_passed = false;
 
-	test_passed = runVectorCheck(tested_flights, expectedFlights);
+	test_passed = run_vector_check(tested_flights, expectedFlights);
 
 	if (test_passed) {
 		cout << "Search by day of week successfully passed" << endl;
@@ -61,17 +61,17 @@ bool runSearchByDayOfWeekTest(vector<Flight>& flightsToTest, vector<Flight>& exp
 }
 
 
-bool runSearchByDestinationAndLaterTimeTest(vector<Flight>& flightsToTest, vector<Flight>& expectedFlights, string days, int hours, int minutes) {
+bool run_search_by_day_and_later_time_test(vector<Flight>& flightsToTest, vector<Flight>& expectedFlights, string days, int hours, int minutes) {
 
 	Flight_manager flights;
 
 	flights.set_flight(flightsToTest);
 
-	vector<Flight> tested_flights = flights.search_destination_later_time(days, hours, minutes);
+	vector<Flight> tested_flights = flights.search_day_later_time(days, hours, minutes);
 
 	bool test_passed = false;
 
-	test_passed = runVectorCheck(tested_flights, expectedFlights);
+	test_passed = run_vector_check(tested_flights, expectedFlights);
 
 	if (test_passed) {
 		cout << "Search by day with later time successfully passed" << endl;
@@ -91,24 +91,23 @@ void runTests() {
 
 			vector<Flight>{
 
-				{"Russia","Boing","Monday", 23, 12, 40 },
-				{"USA","Boing125","Friday", 5, 10, 45 },
+				{"Russia","Plane","Monday", 23, 12, 40 },
+				{"USA","Plane125","Friday", 5, 10, 45 },
 				{"England","Plane","Tuesday", 10, 22, 15 }
 				},
 			vector<Flight>{
 
-				{"Russia","Boing","Monday", 23, 12, 40 },
-				
-				
-				},
-			vector<Flight>{
-
-				{"Russia","Boing","Monday", 23, 12, 40 },
+				{"Russia","Plane","Monday", 23, 12, 40 }
 				
 				},
 			vector<Flight>{
 
-				{"Russia","Boing","Monday", 23, 12, 40 },
+				{"Russia","Plane","Monday", 23, 12, 40 }
+				
+				},
+			vector<Flight>{
+
+				{"Russia","Plane","Monday", 23, 12, 40 }
 				
 
 				}, 
@@ -122,14 +121,13 @@ void runTests() {
 
 			vector<Flight>{
 
-				{"England","Boing","Monday", 23, 12, 30 },
-				{"USA","Boing125","Friday", 5, 10, 45 },
+				{"England","Plane","Monday", 23, 12, 30 },
+				{"USA","Boeing125","Friday", 5, 10, 45 },
 				{"Russia","Plane","Tuesday", 10, 22, 15 }
 				},
 			vector<Flight>{
 
-				{"England","Plane","Monday", 10, 22, 15 },
-				{"England","Plane","Tuesday", 10, 22, 15 }
+				{"England","Plane","Monday", 23, 12, 30 }
 
 				},
 			vector<Flight>{
@@ -151,13 +149,13 @@ void runTests() {
 
 			vector<Flight>{
 
-				{"Russia","Boing","Monday", 23, 12, 30 },
-				{"USA","Boing125","Friday", 5, 10, 45 },
+				{"Russia","Boeing","Monday", 23, 12, 30 },
+				{"USA","Boeing125","Friday", 5, 10, 45 },
 				{"Russia","Plane","Tuesday", 10, 22, 15 }
 				},
 			vector<Flight>{
 
-				{"Russia","Boing","Monday", 23, 12, 30 },
+				{"Russia","Boeing","Monday", 23, 12, 30 },
 				{"Russia","Plane","Tuesday", 10, 22, 15 }
 
 				},
@@ -180,24 +178,24 @@ void runTests() {
 
 			vector<Flight>{
 
-				{"Russia","Boing","Monday", 23, 12, 30 },
-				{"Russia","Boing125","Friday", 5, 10, 45 },
+				{"Russia","Boeing","Monday", 23, 12, 30 },
+				{"Russia","Boeing125","Friday", 5, 10, 45 },
 				{"Russia","Plane","Tuesday", 10, 22, 15 }
 				},
 			vector<Flight>{
 
-				{"Russia", "Boing", "Monday", 23, 12, 30 },
-				{"Russia","Boing125","Friday", 5, 10, 45 },
+				{"Russia", "Boeing", "Monday", 23, 12, 30 },
+				{"Russia","Boeing125","Friday", 5, 10, 45 },
 				{"Russia","Plane","Tuesday", 10, 22, 15 }
 				},
 			vector<Flight>{
 
-				{"Russia", "Boing125", "Friday", 5, 10, 45 }
+				{"Russia", "Boeing125", "Friday", 5, 10, 45 }
 
 				},
 			vector<Flight>{
 
-				{"Russia","Boing125","Friday", 5, 10, 45 },
+				{"Russia","Boeing125","Friday", 5, 10, 45 }
 
 				},
 			"Russia",
@@ -210,13 +208,13 @@ void runTests() {
 
 			vector<Flight>{
 
-				{"England","Boing","Monday", 23, 12, 30 },
-				{"USA","Boing125","Friday", 5, 10, 45 },
+				{"England","Boeing","Monday", 23, 12, 30 },
+				{"USA","Boeing125","Friday", 5, 10, 45 },
 				{"England","Plane","Tuesday", 10, 22, 15 }
 				},
 			vector<Flight>{
 
-				{"England","Plane","Monday", 10, 22, 15 },
+				{"England","Boeing","Monday", 23, 12, 30 },
 				{"England","Plane","Tuesday", 10, 22, 15 }
 
 				},
@@ -241,14 +239,14 @@ void runTests() {
 	bool test_passed = true;
 
 	for (TestCase current_test : search_test) {
-		if (!runSearchByDestinationTest(current_test.flightsToTest, current_test.expectedDestinationResult, current_test.destinationToTest)) {
+		if (!run_search_by_destination_test(current_test.flightsToTest, current_test.expectedDestinationResult, current_test.destinationToTest)) {
 			test_passed = false;
 				}
 		
-		if (!runSearchByDayOfWeekTest(current_test.flightsToTest, current_test.expectedDaysResult, current_test.dayToTest)) {
+		if (!run_search_by_day_of_week_test(current_test.flightsToTest, current_test.expectedDaysResult, current_test.dayToTest)) {
 		test_passed = false;
 		}
-		if (!runSearchByDestinationAndLaterTimeTest(current_test.flightsToTest, current_test.expectedDaysResult, current_test.dayToTest, current_test.hoursToTest, current_test.minutesToTest)) {
+		if (!run_search_by_day_and_later_time_test(current_test.flightsToTest, current_test.expectedDaysResult, current_test.dayToTest, current_test.hoursToTest, current_test.minutesToTest)) {
 			test_passed = false;
 		}
 	}
