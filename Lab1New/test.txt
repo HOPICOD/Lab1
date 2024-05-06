@@ -1,0 +1,3 @@
+a a Monday 1 05:00
+b b Monday 2 18:00
+a c Tuesday 3 21:00

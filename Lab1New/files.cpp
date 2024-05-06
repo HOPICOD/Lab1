@@ -9,12 +9,16 @@
 enum token { DESTINATION, PLANE_TYPE, DAY_OF_WEEK, NUMBER_OF_FLIGHT, HOURS, MINUTES };
 using namespace std;
 
-bool file_exists(const string& filename) {
+bool is_valid_day(const string& days) {
+	return (days == "monday" || days == "Monday" || days == "tuesday" || days == "Tuesday" || days == "wednesday" || days == "Wednesday" || days == "thursday" || days == "Thursday" || days == "friday" || days == "Friday" || days == "saturday" || days == "Saturday" || days == "sunday" || days == "Sunday");
+}
+
+bool file_exists(string filename) {
 	ifstream file(filename);
 	return file.is_open();
 }
 
-bool confirm_overwrite(const string& filename) {
+bool confirm_overwrite(string filename) {
 
 	const int YES = 1;
 
@@ -33,7 +37,7 @@ bool confirm_overwrite(const string& filename) {
 
 }
 
-vector<Flight> get_flights_from_file(const string filename) {
+vector<Flight> get_flights_from_file(string filename) {
 	/*vector<Flight> files;
 
 	ifstream input_file(filename);
@@ -121,13 +125,13 @@ vector<Flight> get_flights_from_file(const string filename) {
 		int hours;
 		int minutes;
 
-		if (!(ss >> destination >> plane_type >> days >> number_of_flight >> hours) || ss.get() != ':' || !(ss >> minutes)) {
-			cerr << "Error parsing line: " << line << endl;
+		if ( (!(ss >> destination >> plane_type >> days >> number_of_flight >> hours) || ss.get() != ':' || !(ss >> minutes)) ) {
+			cerr << "Error parsing line:\" " << line << "\"" << endl;
 			continue;
 		}
 
-		if (number_of_flight < 0 || hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
-			cerr << "Error: Invalid data in line: " << line << endl;
+		if ((number_of_flight < 0 || hours < 0 || hours > 23 || minutes < 0 || minutes > 59) || !(is_valid_day(days))) {
+			cerr << "Error invalid data in line:\" " << line << "\"" << endl;
 			continue;
 		}
 
@@ -139,7 +143,7 @@ vector<Flight> get_flights_from_file(const string filename) {
 	return flights;
 };
 
-bool is_filepath_valid(const string& filepath) {
+bool is_filepath_valid(string filepath) {
 
 	regex file_path_regex("^(?:[a-zA-Z]\\:|\\\\)\\\\([^\\\\]+\\\\)*[^\\/:*?\"<>|]+\\.txt$");
 
@@ -150,7 +154,7 @@ bool is_filepath_valid(const string& filepath) {
 
 	return true;
 }
-bool is_filename_valid(string& filename) {
+bool is_filename_valid(string filename) {
 	regex filename_regex("^[^\\/:*?\"<>|]+\\.txt$");
 
 	regex filename_reserved_names("^(?:CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9]|con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\\..*)?$");
@@ -218,14 +222,20 @@ string get_valid_filepath() {
 
 string get_overwrite_confirmation(string& full_path) {
 	if (file_exists(full_path)) {
-		while (!confirm_overwrite(full_path)) {
+		if (!confirm_overwrite(full_path)) {
 			cout << "Please choose another file." << endl;
 			full_path = get_valid_filepath();
+			return get_overwrite_confirmation(full_path);
 		}
+		/*while (!confirm_overwrite(full_path)) {
+			cout << "Please choose another file." << endl;
+			full_path = get_valid_filepath();
+		}*/
 	}
 	return full_path;
 }
-void export_to_file(vector<Flight> flights_to_export) {
+
+void export_to_file(vector<Flight> &flights_to_export) {
 	if (flights_to_export.empty()) { cout << "You haven't added any flyghts yet" << endl; return; }
 	string full_path = get_valid_filepath();
 	full_path = get_overwrite_confirmation(full_path);
